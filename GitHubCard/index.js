@@ -99,7 +99,26 @@ function githubUserCard(userCard) {
   return card 
 }
 
-const followersArray = [] 
+const followersArray = [
+   "https://api.github.com/users/xpolb01",
+
+   "https://api.github.com/users/simplesolutiondev",
+
+  "https://api.github.com/users/Fotocopantla",
+
+  "https://api.github.com/users/Spground",
+
+  "https://api.github.com/users/mnichols08",
+
+  "https://api.github.com/users/verejava",
+] 
+
+followersArray.forEach((item) => {
+  axios.get(item)
+    .then((response) => {
+      container.appendChild(githubUserCard(response));
+    })
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
