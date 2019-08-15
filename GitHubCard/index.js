@@ -27,9 +27,6 @@
 
 const container =document.querySelector('.cards')
 
-// const card = document.createElement('div')
-// card.classList.add('cards')
-// container.appendChild(card)
 
 axios.get('https://api.github.com/users/nezlobnaya')
 
@@ -38,6 +35,7 @@ axios.get('https://api.github.com/users/nezlobnaya')
     // Data that comes back from the server
     console.log((response))
     container.appendChild(githubUserCard(response))
+
   })
   // Promise has rejected
   .catch((error) => {
@@ -45,7 +43,8 @@ axios.get('https://api.github.com/users/nezlobnaya')
     console.log(error)
   })
 
-// Our component creator function
+  
+//  component creator function
 function githubUserCard(userCard) {
   const card = document.createElement('div')
   card.classList.add('card')
@@ -100,9 +99,9 @@ function githubUserCard(userCard) {
 }
 
 const followersArray = [
-   "https://api.github.com/users/xpolb01",
+  "https://api.github.com/users/xpolb01",
 
-   "https://api.github.com/users/simplesolutiondev",
+  "https://api.github.com/users/simplesolutiondev",
 
   "https://api.github.com/users/Fotocopantla",
 
@@ -113,11 +112,22 @@ const followersArray = [
   "https://api.github.com/users/verejava",
 ] 
 
+const btn = document.createElement('button')
+btn.textContent = 'See my followers';
+btn.classList.add('show_btn')
+container.appendChild(btn)
+btn.style.cursor = 'pointer'
+btn.style.fontSize = 'large'
+btn.style.background = 'rgb(245, 245, 245'
+btn.style.borderRadius = '12px'
+
+btn.addEventListener('click', () => {
 followersArray.forEach((item) => {
   axios.get(item)
     .then((response) => {
       container.appendChild(githubUserCard(response));
     })
+})
 })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
