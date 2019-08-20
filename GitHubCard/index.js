@@ -1,5 +1,5 @@
 /* Step 1: using axios, send a GET request to the following URL 
-           (replacing the palceholder with your Github name):
+           (replacing the placeholder with your Github name):
            https://api.github.com/users/<your name>
 */
 
@@ -24,7 +24,111 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
+const container =document.querySelector('.cards')
+
+
+axios.get('https://api.github.com/users/nezlobnaya')
+
+  .then((response) => {
+    console.log('Network request was successful')
+    // Data that comes back from the server
+    console.log((response))
+    container.appendChild(githubUserCard(response))
+
+  })
+  // Promise has rejected
+  .catch((error) => {
+    console.log('Network request was unsuccessful')
+    console.log(error)
+  })
+
+  
+//  component creator function
+function githubUserCard(userCard) {
+  const card = document.createElement('div')
+  card.classList.add('card')
+  container.appendChild(card)
+
+
+  const img = document.createElement('img')
+  img.src = userCard.data.avatar_url
+  card.appendChild(img)
+
+  const info = document.createElement('div') 
+  info.classList.add('card-info') 
+  card.appendChild(info) 
+
+  const userName = document.createElement('h3') 
+  userName.classList.add('name') 
+  userName.textContent = userCard.data.name
+  info.appendChild(userName) 
+
+  const user = document.createElement('p') 
+  user.classList.add('username') 
+  user.textContent = userCard.data.login 
+  info.appendChild(user) 
+
+  const location = document.createElement('p') 
+  location.textContent = userCard.data.location 
+  info.appendChild(location) 
+
+  const profile = document.createElement('p') 
+  profile.textContent = 'Profile:' 
+  info.appendChild(profile) 
+
+  const profileLink = document.createElement('a') 
+  profileLink.href = userCard.data.html_url 
+  profileLink.textContent = ` ${userCard.data.html_url}`
+  profile.appendChild(profileLink) 
+
+  const followers = document.createElement('p') 
+  followers.textContent = `Followers: ${userCard.data.followers}` 
+  info.appendChild(followers) 
+
+  const following = document.createElement('p') 
+  following.textContent = `Following: ${userCard.data.following}` 
+  info.appendChild(following) 
+
+  const bio = document.createElement('p') 
+  bio.textContent =  `Bio: ${userCard.data.bio}`
+  info.append(bio) 
+
+
+  return card 
+}
+
+const followersArray = [
+  "https://api.github.com/users/xpolb01",
+
+  "https://api.github.com/users/simplesolutiondev",
+
+  "https://api.github.com/users/Fotocopantla",
+
+  "https://api.github.com/users/Spground",
+
+  "https://api.github.com/users/mnichols08",
+
+  "https://api.github.com/users/verejava",
+] 
+
+const btn = document.createElement('button')
+btn.textContent = 'See my followers';
+btn.classList.add('show_btn')
+container.appendChild(btn)
+btn.style.cursor = 'pointer'
+btn.style.fontSize = 'large'
+btn.style.background = 'rgb(245, 245, 245'
+btn.style.borderRadius = '12px'
+
+btn.addEventListener('click', () => {
+followersArray.forEach((item) => {
+  axios.get(item)
+    .then((response) => {
+      container.appendChild(githubUserCard(response));
+    })
+})
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
